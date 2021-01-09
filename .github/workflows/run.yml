@@ -8,6 +8,9 @@ on:
       - master
     paths-ignore:
       - "**/README.md"
+  watch:
+    types: [started]
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -154,6 +157,7 @@ jobs:
       - name: Build geosite.dat file
         run: |
           cd custom || exit 1
+          ls -lh ../community/data
           go run ./ --datapath=../community/data
 
       - name: Move and zip files and generate sha256 hash
@@ -165,9 +169,9 @@ jobs:
           install -p {proxy,direct,reject}-list.txt ./publish/
           install -p {apple-cn,google-cn,gfw,greatfire}.txt ./publish/
           cd ./publish || exit 1
-          zip rules.zip {proxy,direct,reject}-list.txt geoip.dat geosite.dat
+          # zip rules.zip {proxy,direct,reject}-list.txt geoip.dat geosite.dat
           sha256sum geosite.dat > geosite.dat.sha256sum
-          sha256sum rules.zip > rules.zip.sha256sum
+          # sha256sum rules.zip > rules.zip.sha256sum
 
       - name: Release and upload assets
         uses: softprops/action-gh-release@v1
