@@ -166,12 +166,12 @@ jobs:
           #install -Dp ./geoip.dat.sha256sum ./publish/geoip.dat.sha256sum
           install -Dp ./custom/publish/dlc.dat ./publish/geosite.dat
           #install -p {proxy,direct,reject}-tld-list.txt ./publish/
-          #install -p {proxy,direct,reject}-list.txt ./publish/
+          install -p {proxy,direct,reject}-list.txt ./publish/
           #install -p {apple-cn,google-cn,gfw,greatfire}.txt ./publish/
           cd ./publish || exit 1
-          # zip rules.zip {proxy,direct,reject}-list.txt geoip.dat geosite.dat
+          zip rules.zip {proxy,direct,reject}-list.txt geoip.dat geosite.dat
           sha256sum geosite.dat > geosite.dat.sha256sum
-          # sha256sum rules.zip > rules.zip.sha256sum
+          sha256sum rules.zip > rules.zip.sha256sum
 
       - name: Release and upload assets
         uses: softprops/action-gh-release@v1
